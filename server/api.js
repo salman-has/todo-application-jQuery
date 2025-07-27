@@ -2,12 +2,25 @@ const mongoClient = require("mongodb").MongoClient;
 const cors = require("cors");
 const express = require("express");
 
+const path=require('path');
+const PORT=process.env.PORT || 4040;
+
+
 const conString = "mongodb://127.0.0.1:27017";
 
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+
+//serve static folder
+app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../')));
+
+//serve index.html at root lavel
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname, '../index.html'));
+})
 
 app.get('/users/:userid', (req, res)=>{
     mongoClient.connect(conString).then(clientObj=>{
@@ -113,5 +126,6 @@ app.delete('/delete-appointment/:id', (req, res)=>{
    });
 });
 
-app.listen(4040);
-console.log(`Server Started http://127.0.0.1:4040`);
+app.listen(process.env.PORT || 4040,()=>{
+    console.log(`Server Started on port http://0.0.0.0:${PORT}`);
+});
