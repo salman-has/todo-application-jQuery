@@ -6,7 +6,7 @@ const path=require('path');
 const PORT=process.env.PORT || 4040;
 
 
-const conString = "mongodb://127.0.0.1:27017";
+const conString = process.env.MONGO_URI;
 
 const app = express();
 app.use(cors());
