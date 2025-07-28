@@ -10,7 +10,7 @@ function LoadDashboard(){
              $("#lblUser").html($.cookie('userid'));
              $.ajax({
                  method:'get',
-                 url: `http://127.0.0.1:4040/appointments/${$.cookie('userid')}`,
+                 url: `/appointments/${$.cookie('userid')}`,
                  success: (appointments=>{
                      appointments.map(appointment=>{
                           $(`<div class="alert alert-success alert-dismissible">
@@ -81,7 +81,7 @@ $(function(){
 
         $.ajax({
             method: "post",
-            url: `http://127.0.0.1:4040/register-user`,
+            url: `/register-user`,
             data: user,
             success:()=>{
                 alert('User Registered');
@@ -98,7 +98,7 @@ $(function(){
 
           $.ajax({
             method: 'get',
-            url: `http://127.0.0.1:4040/users/${user_id}`,
+            url: `/users/${user_id}`,
             success: (userDetails)=>{
                  if(userDetails){
                      if($("#password").val()===userDetails.password){
@@ -139,7 +139,7 @@ $(function(){
 
         $.ajax({
             method:"post",
-            url:`http://127.0.0.1:4040/add-appointment`,
+            url:`/add-appointment`,
             data:appointment,
             success:()=>{
                
@@ -162,7 +162,7 @@ $(function(){
           if(choice===true){
               $.ajax({
                     method: "delete", 
-                    url: `http://127.0.0.1:4040/delete-appointment/${e.target.value}`,
+                    url: `/delete-appointment/${e.target.value}`,
                 })
                 alert('Appointment Deleted..');
                 LoadDashboard();
@@ -175,7 +175,7 @@ $(function(){
         LoadPage('edit-appointment.html');
         $.ajax({
             method: "get",
-            url: `http://127.0.0.1:4040/appointment-Details/${e.target.value}`,
+            url: `/appointment-Details/${e.target.value}`,
             
             success: (appointments=>{
                 $("#appointment_id").val(appointments.appointment_id);
@@ -201,7 +201,7 @@ $(function(){
         
          $.ajax({
             method : "put",
-            url : `http://127.0.0.1:4040/edit-appointment/${sessionStorage.getItem("appointment_id")}`,
+            url : `/edit-appointment/${sessionStorage.getItem("appointment_id")}`,
             contentType: "application/json",
             data : JSON.stringify(appointment)
                  
